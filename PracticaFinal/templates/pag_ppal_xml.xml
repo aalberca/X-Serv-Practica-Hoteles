@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<serviceList>
+  {% for aloj, foto in lista_hoteles %}
+  <service>
+    <basicData>
+      <name>{{aloj.nombre}}</name>
+      <address>{{aloj.direccion}}</address>
+      <zipcode>{{aloj.cod_postal}}</zipcode>
+      <country>Spain</country>
+      <subAdministrativeArea>Madrid</subAdministrativeArea>
+    </basicData>
+    <multimedia>
+      <url>{{foto}}</url>
+    </multimedia>
+  </service>
+  {% endfor %}
+</serviceList>

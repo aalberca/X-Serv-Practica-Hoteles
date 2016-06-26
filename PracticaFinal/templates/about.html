@@ -1,0 +1,39 @@
+
+{% extends "plantilla_base.html" %}
+
+
+{% block menu %}
+<ul>
+  <a href="/"><li> Inicio </li></a>
+  <a href="/alojam"><li> Todos </li></a>
+  <a href="/about"><li> About </li></a>
+  <a href="/{{user.username}}"><li>Página personal</li></a>
+  <a href="/{{user.username}}/xml"><li>XML</li></a>
+  <a href="/ranking"><li>Ranking</li></a>
+</ul>
+{% endblock %}
+
+
+{% block contenido %}
+
+  <div id="primarycontent">
+    <br/><br/>
+    <h1>Esta práctica ha sido realizada por Ana Alberca Diaz-Plaza</h1><br/>
+    <h4>Grado en Ingeniería en Sistemas de Telecomunicación</h4><br/><br/>
+
+    <p> Esta aplicación web aglutina información sobre alojamientos en la ciudad de Madrid.<br/>
+      Descarga dicha información en formato XML del portal de datos abiertos de Madrid y, asi,
+      los ofrece a los usuarios para que puedan seleccionar aquellos que les parecen más
+      interesantes o que se ajusta más a sus necesidades. <br/> Además todo aquel que se cree una
+      cuenta personal en la aplicación podrá comentar sobre los alojamientos que quiera.
+      <br/>Por último, comentar que los datos de los alojamientos también están disponibles en
+      inglés y francés, pero solo para los usuarios registrados. Éstos también tienen la
+      posibilidad de personalizar el estilo de la página, cambiando el color de fondo y
+      la letra.</p>
+      <br/><p>Como funcionalidad optativa, se incluye un canal RSS con los comentarios puestos en
+        cada alojamiento, la posibilidad de darle a 'Me gusta' a un alojamiento, un contador de visitas
+        para saber cual es el alojamiento más visitado, pulsando a la opción 'Ranking' del menú horizontal,
+        y un canal XML para los contenidos que se muestran en la página principal.</p>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+
+{% extends "plantilla_base.html" %}
+
+{% block contenido %}
+
+  <div id="contenido">
+    <div id="normalcontent">
+      <br/>
+      <h1><strong>{{nombre}}</strong></h1>
+      <h3>{{subcategoria}}</h3><br/>
+      {{descripcion | safe}}
+      <br/>
+    </div>
+  </div>
+
+  <div id="primarycontainer">
+    <div id="primarycontent">
+      <div class="post">
+        <h2>Fotos: </h2>
+        <div class="contentarea">
+          {% for foto in fotos %}
+            <img src="{{foto}}"><br/>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="divider2"></div>
+      <div class="post">
+        <div class="contentarea">
+          <h2>Contacto:</h2>
+          {{web}}<br/>
+          {{telefono}}<br/>
+          <h2>Direccion:</h2>
+          {{direccion}}<br/>
+          {{cod_postal}}<br/>
+        </div>
+      </div>
+      <div class="divider2"></div>
+      <div class="post">
+        <div class="contentarea">
+          {% if user.is_authenticated %}
+            {% if NoComent %}
+              {% csrf_token %}
+              <form action="/poner_comentario/{{alojamiento.id}}" method="post">
+                <h2>¿Desea poner un comentario?</h2>
+                <textarea cols="60" rows="6" name="comentario">Escriba aqui su comentario...</textarea>
+                <br/>
+                <input type="submit" value="Enviar">
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="secondarycontent">
+    <div class="box">
+      {% if user.is_authenticated %}
+      <a href="/anadir_a_pag/{{id}}"><input type="button" value="Añadir a pagina personal"></a>
+      <br/>
+      {% endif %}
+    </div>
+
+    <div class="box">
+      {% if user.is_authenticated %}
+        <h3>Cambiar idioma:</h3>
+        <a href="/otro_idioma/english/{{id}}"><input type="button" value="Ingles"></a><br/>
+        <a href="/otro_idioma/french/{{id}}"><input type="button" value="Frances"></a>
+        <br/>
+      {% endif %}
+    </div>
+
+    <div>
+      <h3>Comentarios: </h3>
+      <div class="contentarea">
+        {% for usuario, texto, fecha in comentarios %}
+        <p><strong>{{usuario | safe}}</strong>     {{fecha | safe}}</p>
+        <p>{{texto | safe}}</p>
+        <br/> <br/>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+
+{% extends "plantilla_base.html" %}
+
+{% block menu %}
+<ul>
+  <a href="/"><li> Inicio </li></a>
+  <a href="/alojam"><li> Todos </li></a>
+  <a href="/about"><li> About </li></a>
+  <a href="/{{user.username}}"><li>Página personal</li></a>
+  <a href="/{{user.username}}/xml"><li>XML</li></a>
+  <a href="/ranking"><li>Ranking</li></a>
+</ul>
+<div class="idiomas">
+  {% if user.is_authenticated %}
+      <a href="/alojamientos/{{id}}" class="imagen"><img src="templates/zenlike/images/es.png" class="right"/></a>
+      <a href="/otro_idioma/french/{{id}}"><img src="templates/zenlike/images/francia.jpg" class="right"/></a>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block contenido %}
+
+  <div id="normalcontent">
+    <br/>
+    <h1><strong>{{nombre}}</strong></h1>
+    <h3>{{subcategoria}}</h3><br/>
+    <p>{{descripcion | safe}}</p>
+    <br/>
+  </div>
+
+  <div id="primarycontainer">
+    <div id="primarycontent">
+      <div class="post">
+        <h2>Photos: </h2>
+        <div class="contentarea">
+          {% for foto in fotos %}
+            <img src="{{foto}}"><br/>
+          {% endfor %}
+          <br/>
+          <div class="megusta">
+            <form method="get" action="/megusta/{{id}}">
+              <button type="submit">
+                <img src="templates/zenlike/images/corazon.jpg"/><sup><b>Like</b></sup>
+              </button>
+              &nbsp&nbsp<img src="templates/zenlike/images/cora.png" class="corazon"/>&nbsp<b>{{megustas}}</b>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="divider2"></div>
+      <div class="post">
+        <div class="contentarea">
+          <h2>Contact:</h2>
+          {{web}}<br/>
+          {{telefono}}<br/>
+          <h2>Address:</h2>
+          {{direccion}}<br/>
+          {{cod_postal}}<br/>
+        </div>
+        <div class="divider2"></div>
+      </div>
+
+      {% if user.is_authenticated %}
+      {% if NoComent %}
+      <div class="post">
+        <div class="contentarea">
+          {% csrf_token %}
+          <form action="/poner_comentario/{{alojamiento.id}}" method="post">
+            <h2>Do you want to post a comment?</h2>
+            <textarea cols="60" rows="6" name="comentario">Write here your comment...</textarea>
+            <br/>
+            <input type="submit" value="Enviar">
+          </form>
+        </div>
+      </div>
+      <div class="divider2"></div>
+      {% endif %}
+      <p>If you want to include this accommodation in your personal page&nbsp<a href="/anadir_a_pag/{{id}}">click here</a></p>
+      <p>To load the RSS channel comments for this accommodation&nbsp<a href="/rss/{{id}}">click here</a></p>
+      {% endif %}
+    </div>
+  </div>
+
+
+  <div id="secondarycontent">
+    <div class="box">
+      <h3>Comments: </h3>
+      <div class="contentarea">
+        {% if not Comentarios_vacio %}
+          {% for usuario, texto, fecha in comentarios %}
+          <p><strong>{{usuario | safe}}</strong>&nbsp &nbsp &nbsp{{fecha | safe}}</p>
+          <p>{{texto | safe}}</p>
+          <br/> <br/>
+          {% endfor %}
+        {% else %}
+          <p>Be the first to post a comment!</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="contentarea">
+      <p><b>Visits:</b>{{visitas}}</p>
+    </div>
+  </div>
+
+{% endblock %}

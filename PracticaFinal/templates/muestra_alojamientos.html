@@ -1,0 +1,74 @@
+
+{% extends "plantilla_base.html" %}
+
+{% block menu %}
+<ul>
+  <a href="/"><li> Inicio </li></a>
+  <a href="/alojam"><li> Todos </li></a>
+  <a href="/about"><li> About </li></a>
+  <a href="/{{user.username}}"><li>Página personal</li></a>
+  <a href="/{{user.username}}/xml"><li>XML</li></a>
+  <a href="/ranking"><li>Ranking</li></a>
+</ul>
+{% endblock %}
+
+
+{% block contenido %}
+
+  <div id="primarycontainer">
+    <br/><h3><center><em><u>Alojamientos disponibles</u></em></center></h3><br/>
+    <br/><br/>
+    <div id="primarycontent">
+      {% for aloj, id in lista_aloj %}
+      <div class="post">
+        <p>{{aloj}}</p>
+        <div class="contentarea">
+          <ul class="controls">
+            <li><a href="/alojamientos/{{id}}" class="more">Leer más</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="divider2"></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div id="secondarycontent">
+    <div class="box">
+      <h4>Filtrar alojamientos por:</h4>
+      <form action="/alojam" method="post">
+      {% csrf_token %}
+      <p>Categoria:</p>
+      <select name="categoria_elegida">
+        <option>Todos</option>
+        <option>Hoteles</option>
+        <option>Apartahoteles</option>
+        <option>Hostales</option>
+        <option>Pensiones</option>
+        <option>Camping</option>
+        <option>Residencias universitarias</option>
+        <option>Albergues</option>
+      </select>
+      <br/><br/>
+      <p>Subcategoria:</p>
+      <select name="subcategoria_elegida">
+        <option>Todos</option>
+        <option>0 estrellas</option>
+        <option>1 estrella</option>
+        <option>2 estrellas</option>
+        <option>3 estrellas</option>
+        <option>4 estrellas</option>
+        <option>0 llaves</option>
+        <option>1 llaves</option>
+        <option>2 llaves</option>
+        <option>3 llaves</option>
+        <option>4 llaves</option>
+      </select>
+      <br/><br/>
+      <input type="submit" value="Filtrar">
+      </form>
+    </div>
+  </div>
+
+
+{% endblock %}

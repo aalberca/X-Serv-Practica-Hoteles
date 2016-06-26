@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<serviceList>
+  {% for aloj, lista_fotos in lista_todo %}
+  <service>
+    <basicData>
+      <name>{{aloj.hotel.nombre}}</name>
+      <phone>{{aloj.hotel.telefono}}</phone>
+      <body>{{aloj.hotel.descripcion}}</body>
+      <web>{{aloj.hotel.web}}</web>
+    </basicData>
+    <geoData>
+      <address>{{aloj.hotel.direccion}}</address>
+      <zipcode>{{aloj.hotel.cod_postal}}</zipcode>
+      <country>Spain</country>
+      <subAdministrativeArea>Madrid</subAdministrativeArea>
+    </geoData>
+    <multimedia>
+      {% for foto in lista_fotos %}
+      <url>{{foto}}</url>
+      {% endfor %}
+    </multimedia>
+    <extraData>
+      <Categoria>{{aloj.hotel.categoria}}</Categoria>
+      <Subcategoria>{{aloj.hotel.subcategoria}}</Subcategoria>
+    </extraData>
+  </service>
+  {% endfor %}
+</serviceList>
